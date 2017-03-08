@@ -6,7 +6,6 @@ This README would normally document whatever steps are necessary to get your app
 
 * Application that records the daily expense of my home
 * 0.1
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 
@@ -26,4 +25,4 @@ This README would normally document whatever steps are necessary to get your app
 ### Who do I talk to? ###
 
 * Buddhi Bal Thapa
-* Other community or team contact
+* [budthapa.pro](http://budthapa.pro)
