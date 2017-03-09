@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"/>
-<title>Insert title here</title>
-</head>
-<body>
-	Add new category
-</body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+	<head>
+	<meta charset="UTF-8"/>
+	<title>Add Category</title>
+	</head>
+	
+	<body>
+		<div layout:fragment="content">
+			<div class="container">
+					<div th:if="${param.error}" class="alert alert-danger" role="alert">
+						<span>Incorrect username or password</span>
+					</div>
+					<div th:if="${param.logout}">
+            			You have been logged out.
+			        </div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Log In
+					</div>
+					<div class="panel-body">
+						<form th:method="post">
+							<div class="form-group">
+								<label for="username">Username</label>
+								<input type="text" id="username" name="username" class="form-control"/>
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" id="password" name="password" class="form-control"/>
+							</div>
+							<button type="submit" class="btn btn-primary">Log In</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
