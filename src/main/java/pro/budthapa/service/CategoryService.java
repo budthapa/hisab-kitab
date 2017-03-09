@@ -35,4 +35,15 @@ public class CategoryService {
 	public Category saveCategory(Category category) {
 		return categoryRepo.save(category);
 	}
+	
+	public Category findCategory(Long id){
+		return categoryRepo.exists(id)?categoryRepo.findOne(id):null;
+	}
+
+	/**
+	 * @param category
+	 */
+	public void updateCategory(Category category) {
+		categoryRepo.save(category);
+	}
 }

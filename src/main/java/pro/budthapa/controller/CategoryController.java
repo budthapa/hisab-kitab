@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,6 +27,7 @@ public class CategoryController {
 	
 	private static final String SHOW_CATEGORIES="category/showCategory";
 	private static final String NEW_CATEGORY = "category/addCategory";
+	private static final String EDIT_CATEGORY = "category/editCategory";
 	
 	@Autowired
 	CategoryService categoryService;
@@ -55,6 +57,33 @@ public class CategoryController {
 			return getAllCategories(model);
 		}
 		return NEW_CATEGORY;
+	}
+	
+	@RequestMapping(value="/category/edit/{id}", method=RequestMethod.GET)
+	public String editCategory(Model model, @PathVariable Long id){
+		Category category=categoryService.findCategory(id);
+		if(category!=null){
+			model.addAttribute(category);
+			return EDIT_CATEGORY;
+		}
+		return getAllCategories(model);
+	}
+	
+	@RequestMapping(value="/category/edit/{id}", method=RequestMethod.POST)
+	public String editCategory(@Valid Category category, BindingResult bindingResult, Model model,
+			@PathVariable Long id){
+		category.setId(id);
+		model.addAttribute(category);
+		if(bindingResult.hasErrors()){
+			return EDIT_CATEGORY;
+		}
+		categoryService.updateCategory(category);
+		return getAllCategories(model);
+	}
+	
+	@RequestMapping(value="/category/delete", method=RequestMethod.POST)
+	public String deleteCategory(Model model){
+		return showCategories(model);
 	}
 	
 	
