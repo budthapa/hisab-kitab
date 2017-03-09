@@ -23,7 +23,7 @@ public class Category {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name="category_name")
+	@Column(name="category_name", unique=true)
 	@NotBlank(message="{category.invalid.name}")
 	private String categoryName;
 	

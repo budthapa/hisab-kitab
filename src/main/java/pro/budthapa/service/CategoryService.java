@@ -46,4 +46,8 @@ public class CategoryService {
 	public void updateCategory(Category category) {
 		categoryRepo.save(category);
 	}
+	
+	public Category checkDuplicateCategory(String name){
+		return categoryRepo.findByCategoryName(name);
+	}
 }

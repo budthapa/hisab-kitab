@@ -17,6 +17,9 @@
 							<div class="alert alert-danger" th:if="${#fields.hasErrors()}">    					
 						    	<p th:each="error: ${#fields.allErrors()}" th:text="${error}"></p>    
 							</div>
+							<div class="alert alert-danger" th:if="${categoryExists}">    					
+						    	<p th:text="#{category.name.exists}"></p>    
+							</div>
 					
 							<div class="form-group">
 								<label for="categoryName" th:text="#{category.name}">Username</label>

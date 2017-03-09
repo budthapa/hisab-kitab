@@ -51,11 +51,17 @@ public class CategoryController {
 	
 	@RequestMapping(value="/category/new", method=RequestMethod.POST)
 	public String addCategory(@Valid Category category, BindingResult bindingResult, Model model){
-		model.addAttribute(category);
 		if(!bindingResult.hasErrors()){
-			categoryService.saveCategory(category);
-			return getAllCategories(model);
-		}
+			Category name=categoryService.checkDuplicateCategory(category.getCategoryName());
+			if(name!=null){
+				model.addAttribute(category);
+				model.addAttribute("categoryExists","category.name.exists");
+				return NEW_CATEGORY;
+			}else{
+				categoryService.saveCategory(category);
+				return getAllCategories(model);
+			}
+		}		
 		return NEW_CATEGORY;
 	}
 	
@@ -74,11 +80,19 @@ public class CategoryController {
 			@PathVariable Long id){
 		category.setId(id);
 		model.addAttribute(category);
-		if(bindingResult.hasErrors()){
-			return EDIT_CATEGORY;
+		if(!bindingResult.hasErrors()){
+			Category name=categoryService.checkDuplicateCategory(category.getCategoryName());
+			if(name!=null){
+				model.addAttribute(category);
+				model.addAttribute("categoryExists","category.name.exists");
+				return EDIT_CATEGORY;
+			}else{
+				categoryService.updateCategory(category);
+				return getAllCategories(model);
+			}
 		}
-		categoryService.updateCategory(category);
-		return getAllCategories(model);
+		
+		return EDIT_CATEGORY;
 	}
 	
 	@RequestMapping(value="/category/delete", method=RequestMethod.POST)

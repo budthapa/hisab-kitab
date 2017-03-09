@@ -15,5 +15,5 @@ import pro.budthapa.domain.Category;
  */
 @Repository
 public interface CategoryRepository extends CrudRepository<Category, Long>{
-
+	Category findByCategoryName(String name);
 }
