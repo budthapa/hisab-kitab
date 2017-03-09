@@ -11,17 +11,16 @@
 		<title>Hisab Kitab</title>
 	</head>
 <body>
-
+<nav th:replace="navbar::nav"></nav>
 <div layout:fragment="content">
 	Main body content goes here
 </div>
 
 <footer th:fragment="footer" class="footer">
 	<div class="container">
-			This is the footer
-			<script src="../js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
-			<script src="../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-		</div>		
+		<script src="../js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+		<script src="../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	</div>		
 </footer>
 </body>
 
