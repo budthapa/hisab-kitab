@@ -3,11 +3,13 @@
  */
 package pro.budthapa.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author budthapa
@@ -21,7 +23,8 @@ public class Category {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@NotNull
+	@Column(name="category_name")
+	@NotBlank(message="{category.invalid.name}")
 	private String categoryName;
 	
 	public Category(){}

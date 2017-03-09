@@ -21,11 +21,18 @@ import pro.budthapa.domain.Category;
 public class CategoryService {
 	
 	@Autowired
-	CategoryRepository category;
+	CategoryRepository categoryRepo;
 
 	public List<Category> findAllCategories() {
 		List<Category> categoryList = new ArrayList<>();
-		category.findAll().forEach(categoryList::add);
+		categoryRepo.findAll().forEach(categoryList::add);
 		return categoryList;
+	}
+
+	/**
+	 * @param category2
+	 */
+	public Category saveCategory(Category category) {
+		return categoryRepo.save(category);
 	}
 }

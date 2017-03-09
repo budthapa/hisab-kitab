@@ -2,33 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
 	<head>
 	<meta charset="UTF-8"/>
-	<title th:text="#{add.category}"></title>
+	<title th:text="#{category.new}"></title>
 	</head>
 	
 	<body>
 		<div layout:fragment="content">
 			<div class="container">
-					<div th:if="${param.error}" class="alert alert-danger" role="alert">
-						<span>Incorrect username or password</span>
-					</div>
-					<div th:if="${param.logout}">
-            			You have been logged out.
-			        </div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						Log In
+						<p th:text="#{category.new}"></p>
 					</div>
 					<div class="panel-body">
-						<form th:method="post">
-							<div class="form-group">
-								<label for="username">Username</label>
-								<input type="text" id="username" name="username" class="form-control"/>
+						<form th:method="post" th:action="@{/category/new}" th:object="${category}">
+							<div class="alert alert-danger" th:if="${#fields.hasErrors()}">    					
+						    	<p th:each="error: ${#fields.allErrors()}" th:text="${error}"></p>    
 							</div>
+					
 							<div class="form-group">
-								<label for="password">Password</label>
-								<input type="password" id="password" name="password" class="form-control"/>
+								<label for="categoryName" th:text="#{category.name}">Username</label>
+								<input type="text" id="categoryName" th:field="*{categoryName}" class="form-control"/>
 							</div>
-							<button type="submit" class="btn btn-primary">Log In</button>
+							<button type="submit" class="btn btn-primary" th:text="#{btn.submit}"></button>
 						</form>
 					</div>
 				</div>
