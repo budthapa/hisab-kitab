@@ -37,7 +37,7 @@ public class CategoryController {
 		return SHOW_CATEGORIES;
 	}
 	
-	@RequestMapping(value="/categories", method=RequestMethod.GET)
+	@RequestMapping(value="/category/all", method=RequestMethod.GET)
 	public String getAllCategories(Model model){
 		model.addAttribute("categories",categoryService.findAllCategories());
 		return showCategories(model);

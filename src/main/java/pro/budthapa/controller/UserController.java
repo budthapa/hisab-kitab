@@ -38,7 +38,7 @@ public class UserController {
 		return INDEX_PAGE;
 	}
 	
-	@RequestMapping(value="/user/add", method=RequestMethod.GET)
+	@RequestMapping(value="/user/new", method=RequestMethod.GET)
 	public String addUser(){
 		return ADD_NEW_USER;
 	}
