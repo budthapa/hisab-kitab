@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<meta charset="UTF-8"/>
+<title th:text="#{user.new}">Insert title here</title>
+</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="container">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<p th:text="#{user.new}"></p>
+						<a th:href="@{/user/all}" th:text="#{user.all}"></a>
+					</div>
+					<div class="panel-body">
+						<div th:if="${userListEmpty}" class="alert alert-danger">
+							<!-- <p th:text="#{user.list.empty}"></p> -->
+						</div>
+						<!-- new user registration by admin -->
+						<form action="" th:method="post" id="addUser" role="form">
+            				<fieldset>
+	            				<legend> 
+	            					<p>Field with <span class="required">*</span> are required</p>
+	            				</legend>
+						
+					            <div class="form-group"> 	 
+					                <label for="name"><span class="required">* </span>Name: </label>
+					                <input class="form-control" type="text" name="name" /> 
+					                <p class="help-block">Please provide full name for the user</p>
+					            </div>
+					            <div class="form-group">
+					                <label for="email"><span class="required">* </span> Email Address: </label> 
+					                <input class="form-control" type="email" name="email" id="email" />
+					                <p class="help-block">Please provide a valid email address. Activation link will be sent to this email</p>
+					            </div>
+					            <div class="form-group">
+					                <label for="password"><span class="required">* </span> Password: </label>
+					                <input name="password" type="password" class="form-control"/>
+					            </div>
+						        <div class="form-group">
+						            <input class="btn btn-success" type="submit" name="Register" value="Register"/>
+						        </div>
+
+				            </fieldset>
+				    	</form><!-- ends register form -->
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

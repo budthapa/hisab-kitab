@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<meta charset="UTF-8"/>
+	<title th:text="#{user.all}"></title>
+</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="container">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<p th:text="#{user.all}"></p>
+						<a th:href="@{/user/add}" th:text="#{user.new}"></a>
+					</div>
+					<div class="panel-body">
+						<div class="alert alert-danger">
+							<p th:if="${userListEmpty}" th:text="#{user.list.empty}"></p>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Edit</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="user : ${users}">
+									<td th:text="${user.name}"></td>
+									<td><a th:href="" class="btn btn-primary btn-sm "><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+									<td><i class="fa fa-trash-o red" aria-hidden="true"></i></td>
+								</tr>
+							</tbody>							
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
