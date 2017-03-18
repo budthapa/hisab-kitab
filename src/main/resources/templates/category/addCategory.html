@@ -11,6 +11,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<p th:text="#{category.new}"></p>
+						<a th:href="@{/categories}" th:text="#{category.show}"></a>
 					</div>
 					<div class="panel-body">
 						<form th:method="post" th:action="@{/category/new}" th:object="${category}">
