@@ -9,8 +9,15 @@
 			<div class="container">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<p th:text="#{user.all}"></p>
-						<a th:href="@{/user/add}" th:text="#{user.new}"></a>
+						<div class="row">
+							<div class="col-xs-9">
+								<p th:text="#{user.all}"></p>
+								<a th:href="@{/user/add}" th:text="#{user.new}"></a>
+							</div>
+							<div class="col-xs-3 pull-right">
+								<img th:src="@{/img/icon/user-group48x48.png}" alt="Hisab Kitab" />
+							</div>
+						</div>
 					</div>
 					<div class="panel-body">
 						<div class="alert alert-danger">
