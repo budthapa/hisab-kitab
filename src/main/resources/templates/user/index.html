@@ -20,8 +20,8 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<div class="alert alert-danger">
-							<p th:if="${userListEmpty}" th:text="#{user.list.empty}"></p>
+						<div th:if="${userListEmpty}" class="alert alert-danger">
+							<p th:text="#{user.list.empty}"></p>
 						</div>
 						<table class="table">
 							<thead>

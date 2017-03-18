@@ -3,7 +3,7 @@
  */
 package pro.budthapa.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class User {
 	@Email
 	private String email;
 	
-	private Date joinDate;
+	private LocalDate joinDate;
 	
 	private boolean active;
 	private String address;
@@ -61,11 +61,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Date getJoinDate() {
+	public LocalDate getJoinDate() {
 		return joinDate;
 	}
 
-	public void setJoinDate(Date joinDate) {
+	public void setJoinDate(LocalDate joinDate) {
 		this.joinDate = joinDate;
 	}
 
