@@ -64,6 +64,17 @@
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 		</dependency>
+		<!-- sending email -->
+		<dependency>
+			<groupId>it.ozimov</groupId>
+			<artifactId>spring-boot-thymeleaf-email</artifactId>
+			<version>0.5.1</version>
+		</dependency>
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

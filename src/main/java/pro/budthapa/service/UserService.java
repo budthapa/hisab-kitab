@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import pro.budthapa.domain.Registration;
 import pro.budthapa.domain.User;
+import pro.budthapa.repo.UserRegistrationRepository;
 import pro.budthapa.repo.UserRepository;
 
 /**
@@ -24,13 +25,16 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	/*
+	@Autowired
+	UserRegistrationRepository userRegistrationRepository;
+	
+	
 	public List<User> findAll(){
 		List<User> userList=new ArrayList<>();
-		userRepository.findAll().forEach(userList::add);
+		userRegistrationRepository.findAll().forEach(userList::add);
 		return userList;
 	}
-*/
+
 	/**
 	 * @param register
 	 */

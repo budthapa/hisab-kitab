@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>This is the registration email</h2>
+	<img th:src="@{/img/icon/48x48.png}"/>
+	<p>
+    	Dear <span th:text="${name}"></span>,
+	</p>
+	
+	<p>
+		You have successfully registered with the website <span th:text="${email}"></span>,
+		please user this {password} to log in 
+	</p>
+	Your activation link is <a th:href="@{activationLink}"></a>
+	
+	Thanks,
+	Buddhi Bal Thapa
+	<a th:href="@{budthapa.pro}"></a>
+	
+	
+</body>
+</html>
