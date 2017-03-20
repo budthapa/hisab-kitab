@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,7 +79,7 @@ public class UserController {
 		}
 		
 		String uuid=UUID.randomUUID().toString();
-		String activationLink="http://"+request.getServerName()+":"+request.getServerPort()+"/user/new/validate?token="+uuid;
+		String activationLink="http://"+request.getServerName()+":"+request.getServerPort()+"/user/new/validate/"+uuid;
 		System.out.println("server "+request.getServerName()+":"+request.getServerPort()+request.getContextPath());
 		System.out.println("activation link ---> "+activationLink);
 		PasswordHashGenerator hash=new PasswordHashGenerator();
@@ -102,14 +103,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/new/validate/{token}", method=RequestMethod.GET)
-	public String validateUserToken( @RequestParam(defaultValue="",name="token") String token, Model model, Registration register){
-		//TODO: request parameter not working
-		String tok= "cc288296-987d-427d-a752-892fc44a0421";
+	public String validateUserToken(@PathVariable String token, Model model, Registration register){
 		
-		System.out.println("token : "+token);
 		//TODO: Set activation link time for 24 hours;
-		
-		register=userService.findRegisteredUser(tok);
+		register=userService.findRegisteredUser(token);
 		
 		if(register!=null){
 			User user=new User();
