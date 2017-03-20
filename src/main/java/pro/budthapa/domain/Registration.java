@@ -27,15 +27,16 @@ public class Registration {
 	private Long id;
 	
 	@NotEmpty
-	@Size(min=3, max=50)
+	@Size(min=3, max=50, message="{name.invalid}")
 	@Column(nullable=false)
 	private String name;
 
 	@Email
-	@NotEmpty
+	@NotEmpty(message="{email.invalid}")
 	@Column(nullable=false)
 	private String email;
 	
+	@Size(min=8,max=30, message="{password.invalid}")
 	private String password;
 	
 	private String token;

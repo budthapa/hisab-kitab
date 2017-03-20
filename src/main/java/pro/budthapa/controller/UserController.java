@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -56,22 +56,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/new", method=RequestMethod.POST)
-	public String addUser(@Valid Registration register, BindingResult result, Model model){
+	public String addUser(Model model, @Valid @ModelAttribute("register") Registration register, BindingResult result){
 		model.addAttribute("register",register);
 		if(result.hasErrors()){
-			List<FieldError> err=result.getFieldErrors();
-						
-			for(FieldError e:err){
-				if(e.getField().equals("name")){
-					model.addAttribute("invalidName", true);
-				}
-				if(e.getField().equals("email")){
-					model.addAttribute("invalidEmail", true);
-				}
-			}
-			
+			//TODO: Validate name, email, password manually
 			return ADD_NEW_USER;
 		}
+		
+		
 		String uuid=UUID.randomUUID().toString();
 		String activationLink="http://localhost:8085/user/new/token?="+uuid;
 		PasswordHashGenerator hash=new PasswordHashGenerator();
@@ -80,11 +72,11 @@ public class UserController {
 		register.setToken(uuid);
 		register.setCreateDate(new Date());
 		register.setPassword(hashedPassword);
-		//send activation email
+		//TODO: get context path so that we can send the address in activation email
 		try {
 			mailConfig.sendEmail(register,plainPassword,activationLink);
 			//TODO: Send email with thymeleaf template
-			//mailConfig.sendVerificationEmail(register, activationLink);
+//			mailConfig.sendVerificationEmail(register, activationLink);
 		} catch (Exception e) {
 			e.getMessage();
 		}

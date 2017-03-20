@@ -27,31 +27,28 @@
 	            					<p>Field with <span class="required">*</span> are required</p>
 	            				</legend>
 					            <div class="form-group"> 	 
-					                <div th:if="${invalidName}" class="alert alert-danger">
-					                	<p>Invalid name. Name must be between 3 and 50 characters.</p>
-					                </div>
 					                <label for="name"><span class="required">* </span>Name: </label>
 					                <input type="text" th:field="*{name}" class="form-control" /> 
-					                <!-- this field is not working -->
-									<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger">
-										<p>Name is invalid</p>
+									<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger error-margin">
+										<p th:text="#{name.invalid}">Name is invalid</p>
 									</div>
 					                <p class="help-block">Please provide full name for the user</p>
 					            </div>
 					            <div class="form-group">
-					            	<div th:if="${invalidEmail}" class="alert alert-danger">
-					                	<p>Invalid Email.</p>
-					                </div>
 					                <label for="email"><span class="required">* </span> Email Address: </label> 
 					                <input class="form-control" type="email" th:field="*{email}"/>
-					                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger">
-					                	<p>Email is invalid</p>
+					                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger error-margin">
+					                	<p th:text="#{email.invalid}">Name is invalid</p>
 					                </div>
 					                <p class="help-block">Please provide a valid email address. Activation link will be sent to this email</p>
 					            </div>
 					            <div class="form-group">
 					                <label for="password"><span class="required">* </span> Password: </label>
 					                <input type="password" th:field="*{password}" class="form-control"/>
+					            	<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger error-margin">
+					                	<p th:text="#{password.invalid}">Invalid Email.</p>
+					                </div>
+					                <p class="help-block">Password must be between 8 and 30 characters</p>
 					            </div>
 						        <div class="form-group">
 						            <input class="btn btn-success" type="submit" name="Register" value="Register"/>

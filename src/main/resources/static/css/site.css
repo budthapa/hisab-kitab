@@ -45,3 +45,6 @@ body {
 .required{
 	color:red;
 }
+.error-margin{
+	margin-top: 5px;
+}
