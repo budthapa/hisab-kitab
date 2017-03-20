@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -36,6 +37,10 @@ public class Registration {
 	@Column(nullable=false)
 	private String email;
 	
+	@Column(name="password")
+	private String validatedPassword;
+	
+	@Transient
 	@Size(min=8,max=30, message="{password.invalid}")
 	private String password;
 	
@@ -69,6 +74,14 @@ public class Registration {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getValidatedPassword() {
+		return validatedPassword;
+	}
+
+	public void setValidatedPassword(String validatedPassword) {
+		this.validatedPassword = validatedPassword;
+	}
 
 	public String getPassword() {
 		return password;
@@ -76,6 +89,7 @@ public class Registration {
 
 	public void setPassword(String password) {
 		this.password = password;
+		this.validatedPassword=password;
 	}
 
 	public String getToken() {

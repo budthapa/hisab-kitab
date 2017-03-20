@@ -31,7 +31,7 @@ public class UserService {
 	
 	public List<User> findAll(){
 		List<User> userList=new ArrayList<>();
-		userRegistrationRepository.findAll().forEach(userList::add);
+		userRepository.findAll().forEach(userList::add);
 		return userList;
 	}
 
@@ -39,6 +39,29 @@ public class UserService {
 	 * @param register
 	 */
 	public Registration save(Registration register) {
-		return userRepository.save(register);
+		return userRegistrationRepository.save(register);
+	}
+	
+	public Registration findRegisteredUser(String token){
+		return userRegistrationRepository.findByToken(token);
+	}
+	
+	public User save(User user){
+		return userRepository.save(user);
+	}
+	
+	public Registration findNewRegistration(String email){
+		return userRegistrationRepository.findByEmail(email);
+	}
+	public User findByEmail(String email){
+		return userRepository.findByEmail(email);
+	}
+
+	/**
+	 * @param email
+	 * @return
+	 */
+	public void deleteValidatedRegistration(Registration register) {
+		userRegistrationRepository.delete(register);;
 	}
 }

@@ -6,7 +6,7 @@ package pro.budthapa.repo;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import pro.budthapa.domain.Registration;
+import pro.budthapa.domain.User;
 
 /**
  * @author budthapa
@@ -14,6 +14,6 @@ import pro.budthapa.domain.Registration;
  * 
  */
 @Repository
-public interface UserRepository extends CrudRepository<Registration,Long>{
-
+public interface UserRepository  extends CrudRepository<User, Long>{
+	User findByEmail(String email);
 }
