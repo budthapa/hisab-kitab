@@ -7,6 +7,9 @@
 	<body>
 		<div layout:fragment="content">
 			<div class="container">
+				<div class="col-md-8 col-md-offset-2">
+					
+				
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="row">
@@ -20,19 +23,19 @@
 					</div>
 					<div class="panel-body">
 						<div th:if="${param.error}" class="alert alert-danger">
-							<p>Invalid username or password</p>
+							<span th:text="#{login.invalid}"></span>
 						</div>
 						<div th:if="${param.logout}" class="alert alert-success">
-							<p>You have been logged out successfully</p>
+							<span th:text="#{logout.success}"></span>
 						</div>
 						<div th:if="${userValidateSuccess}" class="alert alert-success">
-							<span th:text="#{user.validate.success}">Thank you for validating your email. Please login to access your account</span>
+							<span th:text="#{user.validate.success}"></span>
 						</div>
 						<div th:if="${tokenInvalid}" class="alert alert-danger">
 							<span th:text="#{token.invalid}"></span>
 						</div>
 						
-						<form th:action="@{/login}" th:method="post" class="form-signin">
+						<form th:action="@{/login}" th:method="post" th:object="${user}" class="form-signin">
 							<div class="form-group">
 								<label for="username" class="">Username</label>
 								<input type="text" name="username" class="form-control" placeholder="Username"
@@ -47,6 +50,7 @@
 							</div>
 						</form>
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>

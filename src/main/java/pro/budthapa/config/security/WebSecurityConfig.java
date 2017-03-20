@@ -18,10 +18,37 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
-		//permitting all the request temporarely
-		//TODO: Implement spring security
-		http.authorizeRequests()
-		.anyRequest()
-		.permitAll();
+		http
+		.authorizeRequests()
+			.antMatchers(PATTERN)
+			.permitAll()
+		.and()
+			.authorizeRequests()
+			.antMatchers("/user/**", "/category/**").hasRole("ADMIN")
+			.anyRequest()
+			.authenticated()
+		.and()
+			.formLogin()
+			.loginPage("/login")
+			.failureUrl("/login?error")
+		.and()
+			.logout()
+			.logoutUrl("/logout")
+			.deleteCookies("remember-me")
+			.logoutSuccessUrl("/login")
+			.permitAll()
+			.and()
+			.rememberMe();
 	}
+	
+	private final String PATTERN[]={
+		"/",	
+		"/login",
+		"/css/**",
+		"/fonts/**",
+		"/img/**",
+		"/js/**",
+		"/about"
+	};
+	
 }
