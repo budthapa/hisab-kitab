@@ -20,7 +20,8 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<!-- new user registration by admin -->
+						<!-- new product form -->
+						<div th:if="${productExists}" th:text="#{product.name.exists}" class="alert alert-danger"></div>
 						<form th:action="@{/product/new}" th:method="post" th:object="${product}" id="addProduct" role="form">
             				<fieldset>
 	            				<legend> 

@@ -53,11 +53,24 @@ public class ProductController {
 	public String addProduct(@Valid Product product, BindingResult result, Model model){
 		model.addAttribute("product", product);
 		model.addAttribute("allCategories", categories());
+				
 		if(result.hasErrors()){
 			return PRODUCT_FORM;
 		}
+		
+		if(productService.findProduct(product.getName())!=null){
+			model.addAttribute("productExists", true);
+			return PRODUCT_FORM;
+		}
+		
+		String productName=product.getName();
+		StringBuilder sb=new StringBuilder(productName);
+		productName=sb.replace(0, productName.length(), productName.substring(0, 1).toUpperCase()).append(productName.substring(1)).toString();
 		product.setCreateDate(new Date());
+		product.setName(productName);
+
 		productService.saveProduct(product);
+		
 		return PRODUCT_PAGE;
 	}
 	
