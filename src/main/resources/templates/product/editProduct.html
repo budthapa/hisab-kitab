@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
 <head>
 <meta charset="UTF-8"/>
-<title th:text="#{product.new}">Insert title here</title>
+<title th:text="#{product.edit}">Insert title here</title>
 </head>
 	<body>
 		<div layout:fragment="content">
@@ -11,7 +11,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-9">
-								<p th:text="#{product.new}"></p>
+								<p th:text="#{product.edit}"></p>
 								<a th:href="@{/product/all}" th:text="#{product.all}"></a>
 							</div>
 							<div class="col-xs-3 pull-right">
@@ -20,11 +20,14 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<!-- new product form -->
+						<!-- edit product form -->
 						<div th:if="${productExists}" th:text="#{product.name.exists}" class="alert alert-danger"></div>
-						<div th:if="${productSaved}" th:text="#{product.save.success}" class="alert alert-success"></div>
+						<div th:if="${productListEmpty}" class="alert alert-danger">
+							<p th:text="#{product.list.empty}"></p>
+						</div>
+						<div th:if="${productUpdated}" th:text="#{product.update.success}" class="alert alert-success"></div>
 						
-						<form th:action="@{/product/new}" th:method="post" th:object="${product}" id="addProduct" role="form">
+						<form th:action="@{/product/edit/{id}(id=${product.id})}" th:method="post" th:object="${product}" id="addProduct" role="form">
             				<fieldset>
 	            				<legend> 
 	            					<p>Field with <span class="required">*</span> are required</p>

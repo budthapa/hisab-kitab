@@ -3,6 +3,9 @@
  */
 package pro.budthapa.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +28,28 @@ public class ProductService {
 	
 	public Product findProduct(String name){
 		return productRepository.findByName(name);
+	}
+
+	/**
+	 * @return
+	 */
+	public List<Product> findAllProducts() {
+		List<Product> productList=new ArrayList<>();
+		productRepository.findAll().forEach(productList::add);
+		return productList;
+	}
+
+	/**
+	 * @param id
+	 */
+	public Product findProduct(Long id) {
+		return productRepository.findOne(id);
+	}
+
+	/**
+	 * @param product
+	 */
+	public void updateProduct(Product product) {
+		productRepository.save(product);
 	}
 }
