@@ -24,7 +24,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="category : ${categories}">
-									<td th:text="${category.categoryName}"></td>
+									<td th:text="${category.name}"></td>
 									<td><a th:href="@{/category/edit/{id}(id=${category.id})}" class="btn btn-primary btn-sm "><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 									<td>
 										<i class="fa fa-trash-o red" aria-hidden="true"></i> 

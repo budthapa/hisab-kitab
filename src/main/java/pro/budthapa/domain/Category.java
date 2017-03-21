@@ -3,11 +3,15 @@
  */
 package pro.budthapa.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -23,9 +27,12 @@ public class Category {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name="category_name", unique=true)
+	@Column(name="name", unique=true)
 	@NotBlank(message="{category.invalid.name}")
-	private String categoryName;
+	private String name;
+
+	@OneToMany(mappedBy="category", cascade=CascadeType.ALL)
+	private Set<Product> products;
 	
 	public Category(){}
 	
@@ -35,11 +42,20 @@ public class Category {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getCategoryName() {
-		return categoryName;
+	public String getName() {
+		return name;
 	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setname(String name) {
+		this.name = name;
 	}
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+	
 	
 }

@@ -48,6 +48,6 @@ public class CategoryService {
 	}
 	
 	public Category checkDuplicateCategory(String name){
-		return categoryRepo.findByCategoryName(name);
+		return categoryRepo.findByName(name);
 	}
 }

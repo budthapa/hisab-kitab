@@ -37,7 +37,7 @@ public class CategoryController {
 		return SHOW_CATEGORIES;
 	}
 	
-	@RequestMapping(value="/category/all", method=RequestMethod.GET)
+	@RequestMapping(value={"/categories","/category/all"}, method=RequestMethod.GET)
 	public String getAllCategories(Model model){
 		model.addAttribute("categories",categoryService.findAllCategories());
 		return showCategories(model);
@@ -52,7 +52,7 @@ public class CategoryController {
 	@RequestMapping(value="/category/new", method=RequestMethod.POST)
 	public String addCategory(@Valid Category category, BindingResult bindingResult, Model model){
 		if(!bindingResult.hasErrors()){
-			Category name=categoryService.checkDuplicateCategory(category.getCategoryName());
+			Category name=categoryService.checkDuplicateCategory(category.getName());
 			if(name!=null){
 				model.addAttribute(category);
 				model.addAttribute("categoryExists","category.name.exists");
@@ -81,7 +81,7 @@ public class CategoryController {
 		category.setId(id);
 		model.addAttribute(category);
 		if(!bindingResult.hasErrors()){
-			Category name=categoryService.checkDuplicateCategory(category.getCategoryName());
+			Category name=categoryService.checkDuplicateCategory(category.getName());
 			if(name!=null){
 				model.addAttribute(category);
 				model.addAttribute("categoryExists","category.name.exists");
