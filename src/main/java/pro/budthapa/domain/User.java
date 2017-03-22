@@ -4,11 +4,14 @@
 package pro.budthapa.domain;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -39,6 +42,9 @@ public class User {
 	private String address;
 	private String contact;
 	private String imageUrl;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	private Set<Income> income;
 	
 	public User(){}
 
@@ -123,7 +129,14 @@ public class User {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	
-	
+
+	public Set<Income> getIncome() {
+		return income;
+	}
+
+	public void setIncome(Set<Income> income) {
+		this.income = income;
+	}
+
 	
 }
