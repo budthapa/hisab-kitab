@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  * @author budthapa
@@ -37,6 +38,8 @@ public class Income {
 	
 	private Date receivedDate;
 	
+	@NotBlank
+	@NumberFormat
 	private Double amount;
 	
 	@NotNull

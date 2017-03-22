@@ -27,7 +27,7 @@
 						<form th:action="@{/income/new}" th:method="post" th:object="${income}" id="addincome" role="form" class="form-horizontal">
             				<fieldset>
 	            				<legend> 
-	            					<p>Field with <span class="required">*</span> are required</p>
+	            					<span>Field with <span class="required">*</span> are required</span>
 	            				</legend>
 						            <div class="form-group">
 						            	<div class="col-sm-4">
@@ -36,7 +36,7 @@
 						            	<div class="col-sm-8">
 							            	<select id="user" th:field="*{user}" class=" form-control">
 							            		<option value="" th:text="#{income.select.prompt}"></option>
-							            		<option th:each="user: ${users}" th:value="${cat.id}" th:text="${cat.name}"></option>
+							            		<option th:each="user: ${users}" th:value="${user.id}" th:text="${user.name}"></option>
 							            	</select>
 							            	<div th:if="${#fields.hasErrors('user')}" th:errors="*{user}" class="alert alert-danger error-margin"></div>
 						            	</div>
@@ -62,6 +62,19 @@
 						            	</div>
 						            </div>
 						            <div class="form-group">
+									    <div class="col-sm-4">
+								        	<label for="date" class="control-label"><span class="required">* </span>Received On: </label>
+								    	</div>
+								        <div class="col-sm-8">
+								        	<div class=" input-group date datepicker" >
+									            <input type="text" class="form-control" data-date-end-date="0d" readonly="readonly"/>
+									            <span class="input-group-addon">
+        	                						<i class="fa fa-calendar" aria-hidden="true"></i>
+							                    </span>
+								        	</div>
+								        </div>
+									</div>
+						            <div class="form-group">
 						            	<div class="col-sm-4">
 							                <label for="remarks" class="control-label">Remarks: </label> 
 						            	</div>
@@ -82,5 +95,7 @@
 				</div>
 			</div>
 		</div>
+		
 	</body>
+
 </html>
