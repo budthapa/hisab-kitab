@@ -36,5 +36,15 @@ public class IncomeService{
 		incomeRepository.findAll().forEach(list::add);
 		return list;
 	}
+	/**
+	 * @param id
+	 * @return
+	 */
+	public Income findById(Long id) {
+		return incomeRepository.findOne(id);
+	}
 
+    public Income updateIncome(Income income) {
+		return incomeRepository.save(income);
+    }
 }

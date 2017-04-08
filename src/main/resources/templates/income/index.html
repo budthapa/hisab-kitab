@@ -26,17 +26,23 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Category</th>
+									<th>Received from</th>
+									<th>Amount</th>
+									<th>Month</th>
+									<th>Received Date</th>
+									<th>Remarks</th>
 									<th>Edit</th>
 									<th>Delete</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="product : ${products}">
-									<td th:text="${product.name}"></td>
-									<td th:text="${product.category.name}"></td>
-									<td><a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-primary btn-sm "><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+								<tr th:each="income : ${incomeList}">
+									<td th:text="${income.user.name}"></td>
+									<td th:text="${income.amount}"></td>
+									<td th:text="${income.month}"></td>
+									<td th:text="${income.receivedDate}"></td>
+									<td th:text="${income.remarks}"></td>
+									<td><a th:href="@{/income/edit/{id}(id=${income.id})}" class="btn btn-primary btn-sm "><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 									<td><i class="fa fa-trash-o red" aria-hidden="true"></i></td>
 								</tr>
 							</tbody>							

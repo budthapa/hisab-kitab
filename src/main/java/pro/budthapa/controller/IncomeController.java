@@ -3,20 +3,15 @@
  */
 package pro.budthapa.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import pro.budthapa.domain.Income;
-import pro.budthapa.domain.User;
 import pro.budthapa.service.IncomeService;
 import pro.budthapa.service.UserService;
 import pro.budthapa.utility.Months;
@@ -31,6 +26,7 @@ public class IncomeController {
 	
 	private static final String INCOME_ALL = "income/index";
 	private static final String INCOME_ADD = "income/addIncome";
+	private static final String INCOME_EDIT = "income/editIncome";
 
 	@Autowired
 	private UserService userService;
@@ -47,13 +43,7 @@ public class IncomeController {
 	
 	@RequestMapping(value={"/income/new"}, method=RequestMethod.GET)
 	public String addIncome(Income income, Model model){
-		List<User> users=userService.findAll();
-		model.addAttribute("users",users);
-		model.addAttribute("income",income);
-		
-		Map<Integer,String> months=Months.months();
-		model.addAttribute("months",months);
-		
+		incomeAttributes(model, income);
 		return INCOME_ADD;
 	}
 	
@@ -61,11 +51,8 @@ public class IncomeController {
 	public String addIncome(@Valid Income income, BindingResult result, Model model){
 		model.addAttribute("income",income);
 		if(result.hasErrors()){
-			List<User> users=userService.findAll();
-			
-			model.addAttribute("users", users);
-			Map<Integer,String> months=Months.months();
-			model.addAttribute("months",months);
+			model.addAttribute("users", userService.findAll());
+			model.addAttribute("months",Months.months());
 			return INCOME_ADD;
 			
 		}
@@ -74,5 +61,35 @@ public class IncomeController {
 		return INCOME_ADD;
 	}
 	
+	@GetMapping("/income/edit/{id}")
+	public String editIncome(@PathVariable Long id, Model model){
+		Income income=incomeService.findById(id);
+		if(income!=null){
+			incomeAttributes(model,income);
+			return INCOME_EDIT;			
+		}
+		
+		return "redirect:/income/all";
+	}
+
+	@PostMapping("/income/edit/{id}")
+	public String editIncome(@PathVariable Long id, @Valid Income income, BindingResult result, Model model){
+		model.addAttribute("income",income);
+		if(result.hasErrors()){
+			model.addAttribute("users", userService.findAll());
+			model.addAttribute("months",Months.months());
+			return INCOME_ADD;
+
+		}
+		income.setId(id);
+		incomeService.updateIncome(income);
+		model.addAttribute("incomeUpdated", true);
+		return INCOME_ADD;
+	}
 	
+	private void incomeAttributes(Model model, Income income){
+		model.addAttribute("income", income);
+		model.addAttribute("users",userService.findAll());
+		model.addAttribute("months",Months.months());
+	}
 }
