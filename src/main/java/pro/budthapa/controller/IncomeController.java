@@ -4,6 +4,7 @@
 package pro.budthapa.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pro.budthapa.domain.Income;
 import pro.budthapa.domain.User;
 import pro.budthapa.service.UserService;
+import pro.budthapa.utility.Months;
 
 /**
  * @author budthapa
@@ -42,11 +44,24 @@ public class IncomeController {
 		List<User> users=userService.findAll();
 		model.addAttribute("users",users);
 		model.addAttribute("income",income);
+		
+		Map<Integer,String> months=Months.months();
+		
+		model.addAttribute("months",months);
+		
 		return INCOME_ADD;
 	}
 	
 	@RequestMapping(value={"/income/new"}, method=RequestMethod.POST)
 	public String addIncome(@Valid Income income, BindingResult result, Model model){
+		model.addAttribute("income",income);
+		if(result.hasErrors()){
+			
+			System.out.println("month: id "+income.getMonth());
+			
+			return INCOME_ADD;
+			
+		}
 		return INCOME_ADD;
 	}
 }

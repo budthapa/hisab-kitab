@@ -29,16 +29,16 @@ public class Income {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@NotBlank
-	@Size(min=3, max=50)
+	@NotBlank(message="{income.invalid.name}")
 	private String name;
 	
-	@NotNull
+	@NotBlank(message="{income.invalid.month}")
 	private String month;
 	
+	@NotBlank(message="{income.invalid.receiveddate}")
 	private Date receivedDate;
 	
-	@NotBlank
+	@NotBlank(message="{income.invalid.amount}")
 	@NumberFormat
 	private Double amount;
 	
