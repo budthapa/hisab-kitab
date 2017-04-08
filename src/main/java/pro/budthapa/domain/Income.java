@@ -13,9 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 /**
@@ -29,20 +29,18 @@ public class Income {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@NotBlank(message="{income.invalid.name}")
-	private String name;
-	
 	@NotBlank(message="{income.invalid.month}")
 	private String month;
 	
-	@NotBlank(message="{income.invalid.receiveddate}")
+	@NotNull(message="{income.invalid.receiveddate}")
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date receivedDate;
 	
-	@NotBlank(message="{income.invalid.amount}")
+	@NotNull(message="{income.invalid.amount}")
 	@NumberFormat
 	private Double amount;
 	
-	@NotNull
+	@NotNull(message="{income.invalid.name}")
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
@@ -56,14 +54,6 @@ public class Income {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getMonth() {

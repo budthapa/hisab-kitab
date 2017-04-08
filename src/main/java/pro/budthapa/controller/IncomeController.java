@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import pro.budthapa.domain.Income;
 import pro.budthapa.domain.User;
+import pro.budthapa.service.IncomeService;
 import pro.budthapa.service.UserService;
 import pro.budthapa.utility.Months;
 
@@ -34,8 +35,13 @@ public class IncomeController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private IncomeService incomeService;
+	
 	@RequestMapping(value={"/income/all","/income/all/"}, method=RequestMethod.GET)
-	public String index(){
+	public String index(Model model){
+		model.addAttribute("incomeList", incomeService.findAll()); 
+		
 		return INCOME_ALL;
 	}
 	
@@ -46,7 +52,6 @@ public class IncomeController {
 		model.addAttribute("income",income);
 		
 		Map<Integer,String> months=Months.months();
-		
 		model.addAttribute("months",months);
 		
 		return INCOME_ADD;
@@ -56,12 +61,18 @@ public class IncomeController {
 	public String addIncome(@Valid Income income, BindingResult result, Model model){
 		model.addAttribute("income",income);
 		if(result.hasErrors()){
+			List<User> users=userService.findAll();
 			
-			System.out.println("month: id "+income.getMonth());
-			
+			model.addAttribute("users", users);
+			Map<Integer,String> months=Months.months();
+			model.addAttribute("months",months);
 			return INCOME_ADD;
 			
 		}
+		incomeService.saveIncome(income);
+		model.addAttribute("incomeSaved", true);
 		return INCOME_ADD;
 	}
+	
+	
 }
