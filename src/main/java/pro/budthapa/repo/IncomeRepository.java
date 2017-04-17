@@ -15,5 +15,5 @@ import pro.budthapa.domain.Income;
  */
 @Repository
 public interface IncomeRepository extends CrudRepository<Income, Long>{
-
+  //  String incomeOfCurrentMonth(String month);
 }

@@ -20,7 +20,7 @@ import pro.budthapa.repo.ProductRepository;
 @Service
 public class ProductService {
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	
 	public Product saveProduct(Product product){
 		return productRepository.save(product);
@@ -51,5 +51,11 @@ public class ProductService {
 	 */
 	public void updateProduct(Product product) {
 		productRepository.save(product);
+	}
+
+	public List<Product> findAll(){
+		List<Product> products=new ArrayList<>();
+		productRepository.findAll().forEach(products::add);
+		return products;
 	}
 }

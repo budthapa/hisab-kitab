@@ -42,9 +42,23 @@ body {
 .red{
 	color:red;
 }
+
+.green{
+    color:green;
+}
+
 .required{
 	color:red;
 }
 .error-margin{
 	margin-top: 5px;
+}
+
+.expense-container{
+    max-width:980px;
+}
+
+.expense-form-border{
+    border: 1px solid #ddd;
+    padding: 5px;
 }

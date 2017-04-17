@@ -45,7 +45,10 @@ public class User {
 	
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private Set<Income> income;
-	
+
+	@OneToMany(mappedBy = "user", cascade =CascadeType.ALL)
+	private Set<Expense> expense;
+
 	public User(){}
 
 	public Long getId() {
@@ -138,5 +141,11 @@ public class User {
 		this.income = income;
 	}
 
-	
+	public Set<Expense> getExpense() {
+		return expense;
+	}
+
+	public void setExpense(Set<Expense> expense) {
+		this.expense = expense;
+	}
 }

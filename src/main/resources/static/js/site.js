@@ -9,3 +9,12 @@ $(document).ready(function(){
 		todayHighlight:true
 	});
 });
+
+$(document).on('change','.inputPrice', function(){
+	var value=$(".inputPrice").val();
+	var name=[10];
+	name.push(value);
+	
+	console.log("Price is "+value);
+	console.log(name.length);
+});

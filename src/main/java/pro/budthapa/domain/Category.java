@@ -3,15 +3,10 @@
  */
 package pro.budthapa.domain;
 
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -33,7 +28,10 @@ public class Category {
 
 	@OneToMany(mappedBy="category", cascade=CascadeType.ALL)
 	private Set<Product> products;
-	
+
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	private List<Expense> expense;
+
 	public Category(){}
 	
 	public Long getId() {
@@ -56,6 +54,12 @@ public class Category {
 	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
-	
-	
+
+	public List<Expense> getExpense() {
+		return expense;
+	}
+
+	public void setExpense(List<Expense> expense) {
+		this.expense = expense;
+	}
 }
