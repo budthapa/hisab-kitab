@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -94,23 +95,24 @@ public class ExpenseController {
     		}
     	}
     	
-    	
     	List<String> list=expense.getPriceList();
     	
     	productMap.forEach((k,v) -> {
-    		System.out.println("index "+k+" product id"+v);
     		if(list.get(k).isEmpty()){
     			model.addAttribute("priceNotSelected", true);
     			return;
     		}else{
-    			//save the product id and price
+    			//set the product id and price
     		}
     	});
     	
+    	if(result.hasErrors()){
+    		return EXPENSE_NEW;
+    	}
     	
     	
     	
-        return EXPENSE_NEW;
+    	return EXPENSE_ALL;
         
     }
 

@@ -18,25 +18,26 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message="{receipt.number.invalid}")
     @Column(name="receipt_number")
     private String receiptNo;
 
-    @NotBlank
+    @NotNull(message="{income.invalid.amount}")
     private Double amount;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message="{income.invalid.receiveddate}")
     private Date expenseDate;
 
-    @NotBlank
+    @NotBlank(message="{income.invalid.month}")
     private String month;
 
-    @NotNull
+   // @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @NotNull
+    @NotNull(message="{income.invalid.name}")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -44,7 +45,7 @@ public class Expense {
     private String remarks;
 
 	@OneToMany(mappedBy = "expense", cascade = CascadeType.ALL)
-    @NotNull
+    //@NotNull
     private List<ExpenseDetail> expenseDetail;
 
     @Transient

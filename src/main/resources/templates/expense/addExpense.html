@@ -226,7 +226,7 @@
                                     <label for="receiptNo" class="control-label"><span class="required">* </span>Receipt #: </label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input type="text" th:field="*{receiptNo}" class="form-control" placeholder="Enter the receipt number"/>
+                                    <input type="text" th:field="*{receiptNo}" class="form-control red" placeholder="Enter the receipt number"/>
                                     <div th:if="${#fields.hasErrors('receiptNo')}" th:errors="*{receiptNo}" class="alert alert-danger error-margin"></div>
                                 </div>
                             </div>
@@ -272,20 +272,20 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-4">
+                                    <label for="name" class="control-label"><span class="required">* </span>Total Amount: </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" th:field="*{amount}" class="form-control total-expense-amount" placeholder="Total Amount" readonly="readonly"/>
+                                    <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="alert alert-danger error-margin"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
                                     <label for="remarks" class="control-label">Remarks: </label>
                                 </div>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" th:field="*{remarks}"/>
                                     <div th:if="${#fields.hasErrors('remarks')}" th:errors="*{remarks}" class="alert alert-danger error-margin"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-4">
-                                    <label for="name" class="control-label"><span class="required">* </span>Total Amount: </label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input type="text" th:field="*{amount}" class="form-control" placeholder="Total Amount" readonly="readonly"/>
-                                    <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="alert alert-danger error-margin"></div>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -10,11 +10,10 @@ $(document).ready(function(){
 	});
 });
 
-$(document).on('change','.inputPrice', function(){
-	var value=$(".inputPrice").val();
-	var name=[10];
-	name.push(value);
-	
-	console.log("Price is "+value);
-	console.log(name.length);
+$(document).on('change paste', '.inputPrice', function(){
+	var sum = 0;
+	$('.inputPrice').each(function(){
+		sum += +$(this).val();
+	});
+	$('#amount').val(sum);
 });
