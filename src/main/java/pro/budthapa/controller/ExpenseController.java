@@ -2,6 +2,7 @@ package pro.budthapa.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -13,12 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import pro.budthapa.domain.Expense;
-import pro.budthapa.service.IncomeService;
+import pro.budthapa.domain.ExpenseDetail;
+import pro.budthapa.domain.Product;
+import pro.budthapa.service.ExpenseService;
 import pro.budthapa.service.ProductService;
 import pro.budthapa.service.UserService;
 import pro.budthapa.utility.Months;
@@ -34,12 +36,15 @@ public class ExpenseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private IncomeService incomeService;
+//    @Autowired
+//   private IncomeService incomeService;
 
     @Autowired
     private ProductService productService;
-
+    
+    @Autowired
+    private ExpenseService expenseService;
+    
     @GetMapping(value = {"/expense/all","/expense/all/"})
     public String index(){
         return EXPENSE_ALL;
@@ -95,14 +100,25 @@ public class ExpenseController {
     		}
     	}
     	
-    	List<String> list=expense.getPriceList();
+    	List<ExpenseDetail> expenseDetail = new ArrayList<>();
     	
+    	List<String> list=expense.getPriceList();
     	productMap.forEach((k,v) -> {
     		if(list.get(k).isEmpty()){
     			model.addAttribute("priceNotSelected", true);
     			return;
     		}else{
     			//set the product id and price
+    			ExpenseDetail ed=new ExpenseDetail();
+    			ed.setExpense(expense);
+    			
+    			Product expenseProduct = new Product();
+    	    	ed.setPrice(Double.parseDouble(list.get(k)));
+
+    	    	expenseProduct.setId(Long.parseLong(v));
+    	    	ed.setProduct(expenseProduct);
+    	    	
+    	    	expenseDetail.add(ed);
     		}
     	});
     	
@@ -110,9 +126,11 @@ public class ExpenseController {
     		return EXPENSE_NEW;
     	}
     	
-    	
-    	
-    	return EXPENSE_ALL;
+    	expense.setExpenseDetail(expenseDetail);
+    	expenseService.save(expense);
+    	    	
+    	model.addAttribute("expenseSaved", true);
+    	return EXPENSE_NEW;
         
     }
 

@@ -33,6 +33,7 @@
 				<div th:if="${priceNotSelected}" class="alert alert-danger">
 					<p>Price missing for selected product</p>
 				</div>
+				
                 <form th:action="@{/expense/new}" th:method="post" th:object="${expense}" id="addexpense" role="form" class="form-horizontal">
                     <fieldset>
                         <legend>

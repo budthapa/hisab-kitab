@@ -20,7 +20,13 @@ public class ExpenseDetail {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
+    
+    /*
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+	*/
+    
     public Long getId() {
         return id;
     }
@@ -52,4 +58,14 @@ public class ExpenseDetail {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    /*
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	*/
 }

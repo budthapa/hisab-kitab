@@ -1,13 +1,22 @@
 package pro.budthapa.domain;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.annotation.Generated;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Created by budthapa on 4/8/17.
@@ -32,11 +41,6 @@ public class Expense {
     @NotBlank(message="{income.invalid.month}")
     private String month;
 
-   // @NotNull
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
     @NotNull(message="{income.invalid.name}")
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -44,7 +48,7 @@ public class Expense {
 
     private String remarks;
 
-	@OneToMany(mappedBy = "expense", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "expense", cascade = {CascadeType.ALL})
     //@NotNull
     private List<ExpenseDetail> expenseDetail;
 
@@ -112,14 +116,6 @@ public class Expense {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public String getRemarks() {
