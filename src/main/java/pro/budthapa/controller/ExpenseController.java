@@ -3,6 +3,7 @@ package pro.budthapa.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -123,6 +124,14 @@ public class ExpenseController {
     	});
     	
     	if(result.hasErrors()){
+    		return EXPENSE_NEW;
+    	}
+    	LocalDate ld=LocalDate.now();
+    	String month=expense.getMonth();
+    	Date date=expense.getExpenseDate();
+    	
+    	if(Integer.parseInt(month)>ld.getMonthValue()|| date.after(new Date())){
+    		model.addAttribute("invalidDate", true);
     		return EXPENSE_NEW;
     	}
     	
