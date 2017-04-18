@@ -22,6 +22,7 @@ import pro.budthapa.domain.Expense;
 import pro.budthapa.domain.ExpenseDetail;
 import pro.budthapa.domain.Product;
 import pro.budthapa.service.ExpenseService;
+import pro.budthapa.service.IncomeService;
 import pro.budthapa.service.ProductService;
 import pro.budthapa.service.UserService;
 import pro.budthapa.utility.Months;
@@ -37,8 +38,8 @@ public class ExpenseController {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//   private IncomeService incomeService;
+    @Autowired
+    private IncomeService incomeService;
 
     @Autowired
     private ProductService productService;
@@ -127,18 +128,26 @@ public class ExpenseController {
     		return EXPENSE_NEW;
     	}
     	LocalDate ld=LocalDate.now();
+    	int currentMonth=ld.getMonthValue();
     	String month=expense.getMonth();
     	Date date=expense.getExpenseDate();
     	
-    	if(Integer.parseInt(month)>ld.getMonthValue()|| date.after(new Date())){
+    	if(Integer.parseInt(month)>currentMonth|| date.after(new Date())){
     		model.addAttribute("invalidDate", true);
     		return EXPENSE_NEW;
     	}
     	
-    	expense.setExpenseDetail(expenseDetail);
-    	expenseService.save(expense);
+//    	expense.setExpenseDetail(expenseDetail);
+//    	expenseService.save(expense);
     	    	
     	model.addAttribute("expenseSaved", true);
+    	
+    	
+    	Double remainingBalance = calculateRemainingBalance(expense.getAmount(), String.valueOf(currentMonth));
+    	
+    	
+    	
+    	model.addAttribute("remainingBalance", remainingBalance);
     	return EXPENSE_NEW;
         
     }
@@ -147,5 +156,12 @@ public class ExpenseController {
         model.addAttribute("users",userService.findAll());
         model.addAttribute("expense",expense);
         model.addAttribute("months", Months.months());
+    }
+    
+    private Double calculateRemainingBalance(Double amount, String currentMonth){
+    	String income=incomeService.getIncomeForCurrentMonth(currentMonth);
+    	Double remainingBalance = Double.parseDouble(income) - amount;
+    	System.out.println("income "+income+" remainingAmount "+remainingBalance);
+    	return remainingBalance;
     }
 }

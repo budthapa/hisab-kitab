@@ -3,6 +3,7 @@
  */
 package pro.budthapa.repo;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,8 @@ import pro.budthapa.domain.Income;
  */
 @Repository
 public interface IncomeRepository extends CrudRepository<Income, Long>{
-  //  String incomeOfCurrentMonth(String month);
+	
+	@Query("select sum(i.amount) from Income i where i.month = ?1") //class name must be upper case
+	String findByMonth(String currentMonth);
+
 }

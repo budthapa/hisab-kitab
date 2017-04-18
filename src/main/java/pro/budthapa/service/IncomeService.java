@@ -47,21 +47,9 @@ public class IncomeService{
     public Income updateIncome(Income income) {
 		return incomeRepository.save(income);
     }
-/*
-    public String incomeOfCurrentMonth(String month){
-		incomeOfCurrentMonth(month);
-		return incomeRepository.incomeOfCurrentMonth(month);
+
+    public String getIncomeForCurrentMonth(String currentMonth) {
+		return incomeRepository.findByMonth(currentMonth);
 	}
-	*/
+	
 }
-/*
-abstract class IncomeServiceImpl implements IncomeRepository{
-
-
-	@Override
-	public String incomeOfCurrentMonth(String month) {
-
-		return "";
-	}
-}
-*/
