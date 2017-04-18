@@ -93,10 +93,13 @@ public class IncomeController {
 
 	@PostMapping("/income/edit/{id}")
 	public String editIncome(@PathVariable Long id, @Valid Income income, BindingResult result, Model model){
+		/*
 		model.addAttribute("income",income);
 		model.addAttribute("users", userService.findAll());
 		model.addAttribute("months",Months.months());
-
+		*/
+		incomeAttributes(model,income);
+		
 		if(result.hasErrors()){
 			return INCOME_ADD;
 		}

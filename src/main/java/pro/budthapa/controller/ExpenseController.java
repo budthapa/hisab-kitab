@@ -18,9 +18,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import pro.budthapa.domain.Balance;
 import pro.budthapa.domain.Expense;
 import pro.budthapa.domain.ExpenseDetail;
 import pro.budthapa.domain.Product;
+import pro.budthapa.service.BalanceService;
 import pro.budthapa.service.ExpenseService;
 import pro.budthapa.service.IncomeService;
 import pro.budthapa.service.ProductService;
@@ -47,6 +49,9 @@ public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
     
+    @Autowired
+    private BalanceService balanceService;
+    
     @GetMapping(value = {"/expense/all","/expense/all/"})
     public String index(){
         return EXPENSE_ALL;
@@ -55,11 +60,13 @@ public class ExpenseController {
     @GetMapping("/expense/new")
     public String addExpense(Expense expense, Model model){
         LocalDate date1=LocalDate.now();
-        String currentMonth=date1.format(DateTimeFormatter.ofPattern("MM", Locale.US));
+        String currentMonth = String.valueOf(date1.getMonth().getValue());
         
-      //  String collectionOfCurrentMonth = incomeService.incomeOfCurrentMonth(currentDate);
+//        String currentMonth=date1.format(DateTimeFormatter.ofPattern("MM", Locale.US));
+        Double remainingBalance = balanceService.getRemainingBalanceByMonth(currentMonth);
         model.addAttribute("products",productService.findAll());
-
+        model.addAttribute("remainingBalance", remainingBalance);
+        
         expenseAttribute(model,expense);
         return EXPENSE_NEW;
     }
@@ -68,11 +75,13 @@ public class ExpenseController {
     public String addExpense(@Valid Expense expense, BindingResult result, Model model){
     	totalItem=0;
     	model.addAttribute("products",productService.findAll());
+    	/*
     	model.addAttribute("users",userService.findAll());
         model.addAttribute("expense",expense);
         model.addAttribute("months", Months.months());
-
+		*/
     	
+        expenseAttribute(model,expense);
     	
     	/*
     	 * Replace expenseDetail[0] in addExpense.html,
@@ -137,17 +146,18 @@ public class ExpenseController {
     		return EXPENSE_NEW;
     	}
     	
-//    	expense.setExpenseDetail(expenseDetail);
-//    	expenseService.save(expense);
+    	expense.setExpenseDetail(expenseDetail);
+    	expenseService.save(expense);
     	    	
     	model.addAttribute("expenseSaved", true);
     	
+    	Double remainingBalance = balanceService.getRemainingBalanceByMonth(String.valueOf(currentMonth));
+
+    	Double newBalance = calculateRemainingBalance(expense.getAmount(), remainingBalance);
     	
-    	Double remainingBalance = calculateRemainingBalance(expense.getAmount(), String.valueOf(currentMonth));
+    	setNewBalance(expense, remainingBalance, newBalance);
     	
-    	
-    	
-    	model.addAttribute("remainingBalance", remainingBalance);
+    	model.addAttribute("remainingBalance", newBalance);
     	return EXPENSE_NEW;
         
     }
@@ -158,10 +168,19 @@ public class ExpenseController {
         model.addAttribute("months", Months.months());
     }
     
-    private Double calculateRemainingBalance(Double amount, String currentMonth){
-    	String income=incomeService.getIncomeForCurrentMonth(currentMonth);
-    	Double remainingBalance = Double.parseDouble(income) - amount;
-    	System.out.println("income "+income+" remainingAmount "+remainingBalance);
+    private Double calculateRemainingBalance(Double amount, Double balance){
+    	Double remainingBalance = balance - amount;
     	return remainingBalance;
+    }
+    
+    private void setNewBalance(Expense expense, Double remainingBalance, Double newBalance){
+    	Balance balance = new Balance();
+    	balance.setUser(expense.getUser());
+		balance.setExpenseAmount(expense.getAmount());
+		balance.setMonth(expense.getMonth());
+		balance.setPreviousBalance(remainingBalance);
+		balance.setRemainingBalance(newBalance);
+		
+    	balanceService.saveNewBalance(balance);
     }
 }
