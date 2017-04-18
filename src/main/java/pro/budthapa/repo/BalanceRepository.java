@@ -8,6 +8,7 @@ import pro.budthapa.domain.Balance;
 
 @Repository
 public interface BalanceRepository extends CrudRepository<Balance, Long>{
-	@Query("select max(b.remainingBalance) from Balance b where b.month = ?1")
+	//@Query("select max(b.remainingBalance) from Balance b where b.month = ?1")
+	@Query(value="SELECT remaining_balance FROM balance WHERE month = ?1 ORDER BY id DESC LIMIT 1", nativeQuery=true)
 	Double findRemainingBalanceByMonth(String month);
 }

@@ -74,15 +74,8 @@ public class IncomeController {
 		
 		Double newBalance = savedIncome.getAmount()+balanceAmount;
 		
-		Balance balance = new Balance();
-		balance.setUser(savedIncome.getUser());
-		balance.setExpenseAmount(0.0);
-		balance.setMonth(savedIncome.getMonth());
-		balance.setPreviousBalance(balanceAmount);
-		balance.setRemainingBalance(newBalance);
-		
-		balanceService.saveNewBalance(balance);
-		
+		setBalance(savedIncome, balanceAmount, newBalance);
+
 		model.addAttribute("incomeSaved", true);
 		return INCOME_ADD;
 	}
@@ -101,14 +94,22 @@ public class IncomeController {
 	@PostMapping("/income/edit/{id}")
 	public String editIncome(@PathVariable Long id, @Valid Income income, BindingResult result, Model model){
 		model.addAttribute("income",income);
-		if(result.hasErrors()){
-			model.addAttribute("users", userService.findAll());
-			model.addAttribute("months",Months.months());
-			return INCOME_ADD;
+		model.addAttribute("users", userService.findAll());
+		model.addAttribute("months",Months.months());
 
+		if(result.hasErrors()){
+			return INCOME_ADD;
 		}
+		
+		//get the previous saved amount
+		Income incomeAmount=incomeService.findById(id);
+		Double previousAmount = incomeAmount.getAmount();
+		
 		income.setId(id);
 		incomeService.updateIncome(income);
+		
+		adjustBalance(income, previousAmount);
+		
 		model.addAttribute("incomeUpdated", true);
 		return INCOME_ADD;
 	}
@@ -117,5 +118,32 @@ public class IncomeController {
 		model.addAttribute("income", income);
 		model.addAttribute("users",userService.findAll());
 		model.addAttribute("months",Months.months());
+	}
+	
+	private void adjustBalance(Income income, Double amount){
+		Double balanceAmount = balanceService.getRemainingBalanceByMonth(income.getMonth());
+		Double adjustAmount=0.0;
+		Double newBalance=0.0;
+		System.out.println("amount "+amount+ " income amount "+income.getAmount());
+		if(amount < income.getAmount()){
+			adjustAmount = income.getAmount() - amount;
+			newBalance = adjustAmount + balanceAmount;
+		}else{
+			adjustAmount = amount - income.getAmount();
+			newBalance = balanceAmount - adjustAmount;
+		}
+		
+		setBalance(income, balanceAmount, newBalance);
+	}
+	
+	private void setBalance(Income income, Double balanceAmount, Double newBalance){
+		Balance balance = new Balance();
+		balance.setUser(income.getUser());
+		balance.setExpenseAmount(0.0);
+		balance.setMonth(income.getMonth());
+		balance.setPreviousBalance(balanceAmount);
+		balance.setRemainingBalance(newBalance);
+		
+		balanceService.saveNewBalance(balance);
 	}
 }
