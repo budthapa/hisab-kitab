@@ -17,3 +17,8 @@ $(document).on('change paste', '.inputPrice', function(){
 	});
 	$('#amount').val(sum);
 });
+
+$().ready(function(){
+	$(".table").dataTable();
+});
+
