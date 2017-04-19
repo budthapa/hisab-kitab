@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<meta charset="UTF-8"/>
+	<title th:text="#{expense.all}"></title>
+</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="container expense-container">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-9">
+								<a th:href="@{/expense/all}" th:text="#{expense.all}"></a>
+							</div>
+							<div class="col-xs-3 pull-right">
+								<img th:src="@{/img/icon/expense48x48.png}" alt="Hisab Kitab expense" class="img-responsive" />
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div th:unless="${expenseDetail}" class="alert alert-danger">
+							<p th:text="#{product.list.empty}"></p>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th class="hidden-xs">Receipt Number</th>
+									<th class="hidden-xs">Expense Date</th>
+									<th class="hidden-xs">Month</th>
+									<th class="hidden-xs">Expense from</th>
+									<th>Category</th>
+									<th>Price</th>
+									<th>Product Name</th>
+									<th>Total Amount</th>
+									<th class="hidden-xs">Remarks</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="ed : ${expenseDetail}">
+									<td th:text="${ed.expense.receiptNo}" class="hidden-xs"></td>
+									<td th:text="${#dates.format(ed.expense.expenseDate, 'dd-MM-yyyy')}" class="hidden-xs"></td>
+									<td th:text="${ed.expense.month}" class="hidden-xs"></td>
+									<td th:text="${ed.expense.user.name}" class="hidden-xs"></td>
+									<td th:text="${ed.product.category.name}"></td>
+									<td th:text="${ed.price}"></td>
+									<td th:text="${ed.product.name}"></td>
+									<td th:text="${ed.expense.amount}"></td>
+									<td th:text="${ed.expense.remarks}" class="hidden-xs"></td>
+								</tr>
+							</tbody>							
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

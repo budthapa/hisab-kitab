@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<meta charset="UTF-8"/>
+	<title th:text="#{expense.all}"></title>
+</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="container expense-container">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-9">
+								<p th:text="#{expense.all}"></p>
+								<a th:href="@{/expense/new}" th:text="#{expense.new}"></a>
+							</div>
+							<div class="col-xs-3 pull-right">
+								<img th:src="@{/img/icon/expense48x48.png}" alt="Hisab Kitab expense" class="img-responsive" />
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div th:if="${productListEmpty}" class="alert alert-danger">
+							<p th:text="#{product.list.empty}"></p>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Receipt Number</th>
+									<th class="hidden-xs">Expense Date</th>
+									<th class="hidden-xs">Expense from</th>
+									<th>Total Amount</th>
+									<th>Month</th>
+									<th class="hidden-xs">Remarks</th>
+									<th>Edit</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="expense : ${expenseList}">
+									<td><a th:text="${expense.receiptNo}" th:href="@{/expense/{id}/detail(id=${expense.id})}"></a></td>
+									<td th:text="${expense.expenseDate}" class="hidden-xs"></td>
+									<td th:text="${expense.user.name}" class="hidden-xs"></td>
+									<td th:text="${expense.amount}"></td>
+									<td th:text="${expense.month}"></td>
+									<td th:text="${expense.remarks}" class="hidden-xs"></td>
+									<td><a th:href="@{/expense/edit/{id}(id=${expense.id})}" class="btn btn-primary btn-sm "><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+									<td><i class="fa fa-trash-o red" aria-hidden="true"></i></td>
+								</tr>
+							</tbody>							
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

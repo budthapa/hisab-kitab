@@ -1,12 +1,10 @@
 package pro.budthapa.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import pro.budthapa.domain.Balance;
@@ -53,7 +52,9 @@ public class ExpenseController {
     private BalanceService balanceService;
     
     @GetMapping(value = {"/expense/all","/expense/all/"})
-    public String index(){
+    public String index(Model model){
+    	List<Expense> expenseList = expenseService.findAllExpense();
+    	model.addAttribute("expenseList", expenseList);
         return EXPENSE_ALL;
     }
 
@@ -162,6 +163,16 @@ public class ExpenseController {
         
     }
 
+    @GetMapping("/expense/{id}/detail")
+    public String viewExpenseDetail(@PathVariable Long id, Model model){
+    	Expense ex = expenseService.findExpense(id);
+    	if(ex!=null){
+    		List<ExpenseDetail> expenseDetail=ex.getExpenseDetail();
+    		model.addAttribute("expenseDetail", expenseDetail);    		
+    	}
+    	return "expense/expenseDetail";
+    }
+    
     private void expenseAttribute(Model model, Expense expense){
         model.addAttribute("users",userService.findAll());
         model.addAttribute("expense",expense);
