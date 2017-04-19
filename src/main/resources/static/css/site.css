@@ -42,14 +42,13 @@ body {
 .red{
 	color:red;
 }
-
+.error{
+	color:red;
+}
 .green{
     color:green;
 }
 
-.required{
-	color:red;
-}
 .error-margin{
 	margin-top: 5px;
 }

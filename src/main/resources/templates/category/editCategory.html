@@ -14,7 +14,7 @@
 						<a th:href="@{/categories}" th:text="#{category.show}"></a>
 					</div>
 					<div class="panel-body">
-						<form th:method="post" th:action="@{/category/edit/{id}(id=${category.id})}" th:object="${category}">
+						<form id="categoryForm" th:method="post" th:action="@{/category/edit/{id}(id=${category.id})}" th:object="${category}">
 							<div class="alert alert-danger" th:if="${#fields.hasErrors()}">    					
 						    	<p th:each="error: ${#fields.allErrors()}" th:text="${error}"></p>    
 							</div>
@@ -23,7 +23,7 @@
 							</div>
 							<div class="form-group">
 								<label for="name" th:text="#{category.name}">Category Name</label>
-								<input type="text" th:field="*{name}" class="form-control"/>
+								<input type="text" th:field="*{name}" class="form-control required"/>
 							</div>
 							<button type="submit" class="btn btn-primary" th:text="#{btn.submit}"></button>
 						</form>

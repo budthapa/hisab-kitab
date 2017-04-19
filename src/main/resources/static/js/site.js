@@ -22,3 +22,6 @@ $().ready(function(){
 	$(".table").dataTable();
 });
 
+$().ready(function(){
+	$("#categoryForm").validate();
+});
